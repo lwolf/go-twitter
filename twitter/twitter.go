@@ -14,6 +14,7 @@ type Client struct {
 	// Twitter API Services
 	Accounts       *AccountService
 	Blocks         *BlockService
+	Config         *ConfigService
 	DirectMessages *DirectMessageService
 	Favorites      *FavoriteService
 	Followers      *FollowerService
@@ -37,6 +38,7 @@ func NewClient(httpClient *http.Client) *Client {
 		sling:          base,
 		Accounts:       newAccountService(base.New()),
 		Blocks:         newBlockService(base.New()),
+		Config:         newConfigService(base.New()),
 		DirectMessages: newDirectMessageService(base.New()),
 		Favorites:      newFavoriteService(base.New()),
 		Followers:      newFollowerService(base.New()),
