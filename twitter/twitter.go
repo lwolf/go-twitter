@@ -7,6 +7,9 @@ import (
 )
 
 const twitterAPI = "https://api.twitter.com/1.1/"
+const twitterMediaAPI string = "https://upload.twitter.com/1.1/"
+
+// const twitterMediaAPI string = "https://upload.twitter.com/1.1/media/upload.json"
 
 // Client is a Twitter client for making Twitter API requests.
 type Client struct {
@@ -27,11 +30,13 @@ type Client struct {
 	Timelines      *TimelineService
 	Trends         *TrendsService
 	Users          *UserService
+	Media          *MediaService
 }
 
 // NewClient returns a new Client.
 func NewClient(httpClient *http.Client) *Client {
 	base := sling.New().Client(httpClient).Base(twitterAPI)
+	mediaBase := sling.New().Client(httpClient).Base(twitterMediaAPI)
 	return &Client{
 		sling:          base,
 		Accounts:       newAccountService(base.New()),
@@ -49,6 +54,7 @@ func NewClient(httpClient *http.Client) *Client {
 		Timelines:      newTimelineService(base.New()),
 		Trends:         newTrendsService(base.New()),
 		Users:          newUserService(base.New()),
+		Media:          newMediaService(mediaBase.New()),
 	}
 }
 
